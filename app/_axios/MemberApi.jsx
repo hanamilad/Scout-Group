@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 
 const apikey=process.env.RESET_API_KEY;
-const apiurl="http://localhost:1337"
+const apiurl="https://strapi-project-0e4u.onrender.com"
 
 const axiosmember=axios.create({
     baseURL:apiurl,
