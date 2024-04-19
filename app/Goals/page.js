@@ -6,7 +6,6 @@ import { CirclePlus, CircleX, Pencil, Save, Trash2 } from 'lucide-react'
 
 function Goals() {
 const [Goals,setGoals]=useState([])
-const [check,setcheck]=useState([null])
 const [editgoals, seteditgoals] = useState(null);
 const [isopen,setisopen]=useState(false)  
 const [newgoals,setnewgoals]=useState({
@@ -15,7 +14,7 @@ const [newgoals,setnewgoals]=useState({
 const change = (e) => {
   setnewgoals({ ...newgoals, [e.target.id]: e.target.value });
 };
-const addmember=async (e)=>{
+const addgoal=async (e)=>{
   e.preventDefault();
   const data={
     data:{
@@ -31,12 +30,7 @@ const getallgoals= ()=>{
   FunApi.getGoals().then(res=>
     setGoals(res.data.data)
   )
-}
-const handelcheck=(id)=>{
-  const value=Goals[id].attributes.checked;
-  setcheck(!value)
-}
-
+} 
 const deletgoals = (id) => {
   FunApi.deletgoals(id).then(res => {
     getallgoals();
@@ -46,19 +40,19 @@ const handleCancel = () => {
   seteditgoals(null);
 };
 
-
 const handleSave = async () => {
   try {
    const updatedgoals = editgoals.attributes; 
     await FunApi.updategoals(editgoals.id, updatedgoals); 
-    const updateGoalsFinal = members.map((member) => {
-      if (member.id === editingUser.id) {
-        return editingUser; 
+    const updateGoalsFinal = Goals.map((goal) => {
+      if (goal.id === editgoals.id) {
+        return editgoals; 
       }
-      return member;
+      return goal;
     });
     setGoals(updateGoalsFinal);
     seteditgoals(null);
+    console.log(editgoals)
   } catch (error) {
     console.error("Error updating user:", error);
   }
@@ -69,7 +63,6 @@ const updategoals=(id,user)=>{
 }
 const Toggle=()=>{
   setisopen(!isopen)
-  console.log(isopen)
 }
 
 useEffect(()=>{
@@ -81,7 +74,6 @@ useEffect(()=>{
 
 
   return (
-
 <fieldset>
   <div className="space-y-2">
  {Goals?.map((goal,index)=>{
@@ -111,7 +103,15 @@ Namesubject: e.target.value
       </div>
       <div className="flex items-center">
         &#8203;
-        <input type="checkbox"  onClick={()=>handelcheck(index)}    className="size-4 rounded border-gray-300" id="Option1" />
+        <input 
+        type="checkbox" 
+        checked={editgoals.attributes.checked}
+                  onChange={(e) => seteditgoals({ ...editgoals,  attributes: { 
+          ...editgoals.attributes, 
+          checked: e.target.checked 
+}})}   
+  className="size-4 rounded border-gray-300" id="Option1" />
+        <span>-{index}</span>
       </div>
 
     </label>
@@ -133,7 +133,8 @@ Namesubject: e.target.value
       </div>
       <div className="flex items-center">
         &#8203;
-        <input type="checkbox"  onClick={()=>handelcheck(index)}    className="size-4 rounded border-gray-300" id="Option1" />
+        <input type="checkbox"  checked={goal.attributes.checked}   className="size-4 rounded border-gray-300" id="Option1" />
+        <span>-{index}</span>
       </div>
 
     </label>
@@ -141,7 +142,7 @@ Namesubject: e.target.value
     <CirclePlus size={48} color="#006614" strokeWidth={2.75} onClick={Toggle} />
     {
       isopen? 
-    <form action="#" onSubmit={addmember} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 fixed bottom-[30px] left-[40px]" >
+    <form action="#" onSubmit={addgoal} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 fixed bottom-[30px] left-[40px]" >
       <div>
         <label htmlFor="email" className="sr-only">Email</label>
 

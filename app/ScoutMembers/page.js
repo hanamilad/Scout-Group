@@ -150,6 +150,7 @@ onChange={(e) => setEditingUser({ ...editingUser, attributes: {
         <td className="whitespace-nowrap px-4 py-2 text-gray-700">{member?.attributes?.Data}</td>
         <td className="whitespace-normal px-4 py-2  text-gray-700">{member?.attributes?.description}</td>
         <td className="whitespace-nowrap px-4 py-2 text-gray-700">{member?.attributes?.group}</td>
+        <td className="whitespace-nowrap px-4 py-2 text-gray-700"></td>
         <td className="whitespace-nowrap px-4 py-2 text-gray-700 flex" >
         <div></div>
         <div onClick={()=>updatemember(member.id,member)}> <Pencil size={16} color="#000000" strokeWidth={1.5} className='mr-2 cursor-pointer' /></div>

@@ -10,7 +10,6 @@ function Allmember() {
   const [members,setmembers]=useState()
 
 const getAllmembers=()=>{
-  
   FunApi.getallmember().then(
     res=>setmembers(res.data.data) 
   )
@@ -18,6 +17,13 @@ const getAllmembers=()=>{
 useEffect(()=>{
   getAllmembers()
 },[])
+
+const recordAttendance=(memberId, statu)=>{
+  console.log(memberId,statu)
+
+}
+
+
   return (
 <div className="overflow-x-auto    ">
   <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
@@ -36,9 +42,9 @@ useEffect(()=>{
       return(
 <>
         <tr className='text-center' key={member.id}>
-        <td className="sticky inset-y-0 start-0 bg-white px-4 py-2">
+        <td className="sticky inset-y-0 start-0 bg-white px-4 py-2">  
         <span>{index}_</span>
-          <input className="size-5 rounded border-gray-300" type="checkbox" id="Row1"              
+          <input className="size-5 rounded border-gray-300" type="checkbox" id="Row1" checked={()=>recordAttendance(member.id,true)}           
            />
         </td>
         <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{member.attributes.Name}</td>

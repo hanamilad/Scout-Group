@@ -1,3 +1,4 @@
+
 const { default: axiosApi } = require("./MemberApi");
 
 const getallmember=()=>axiosApi.get("/api/members")
@@ -6,8 +7,9 @@ const deleteuser = (id) => axiosApi.delete(`/api/members/${id}`);
 const updateuser = (id,data) => axiosApi.put(`/api/members/${id}`,{data:data});
 const getGoals =()=>axiosApi.get("/api/goals")
 const deletgoals=(id)=>axiosApi.delete(`/api/goals/${id}`)
-const updategoals=(id,data)=>axiosApi.put(`/api/goals/${id}`,data)
+const updategoals=(id,data)=>axiosApi.put(`/api/goals/${id}`,{data:data})
 const addgoals=(data)=>axiosApi.post("/api/goals",data)
+const postAttendance=(data)=>axiosApi.post("/api/attendances",data)
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -19,5 +21,6 @@ export default{
     getGoals,
     deletgoals,
     updategoals,
-    addgoals
+    addgoals,
+    postAttendance
 }

@@ -10,8 +10,9 @@ function Nav() {
     const [isOpen, setIsOpen] = useState(false); 
   
     const toggleMenu = () => {
-      setIsOpen(!isOpen); 
+      setIsOpen(!isOpen);  
     };
+
 
   return (
     <header className="bg-white">
@@ -73,7 +74,7 @@ function Nav() {
           </button>
           {isOpen && (
 
-            <nav  aria-label="Global" className=" md:block fixed top-0 bottom-0 z-10 right-0 p-4 bg-teal-600">
+            <nav   aria-label="Global" className=" md:block fixed top-0 bottom-0 z-10 right-0 p-4 bg-teal-600">
           <ul className="flex flex-col items-center gap-[2.5rem] font-bold  mt-4 text-lg">
             <li>
               <Link className="text-white transition hover:text-black  " href="/AddMember"> Add member </Link>
@@ -81,6 +82,9 @@ function Nav() {
   
             <li>
               <Link className="text-white transition hover:text-black" href="/ScoutMembers"> Scout Members </Link>
+            </li>
+            <li>
+              <Link className="text-white transition hover:text-black" href="/Goals"> Goals of year </Link>
             </li>
           </ul>
           <CircleX size={30} color="black" className='absolute top-1 left-1 '  strokeWidth={3} onClick={toggleMenu} />
