@@ -138,7 +138,12 @@ Namesubject: e.target.value
       </div>
 
     </label>
-    <div className='fixed bottom-3 left-3 cursor-pointer'>
+
+    </>
+  )
+    
+  }) }
+  <div className='fixed bottom-3 left-3 cursor-pointer'>
     <CirclePlus size={48} color="#006614" strokeWidth={2.75} onClick={Toggle} />
     {
       isopen? 
@@ -178,10 +183,6 @@ Namesubject: e.target.value
 
     
     </div>
-    </>
-  )
-    
-  }) }
 
   </div>
 </fieldset>
