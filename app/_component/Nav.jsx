@@ -11,7 +11,6 @@ function Nav() {
   
     const toggleMenu = () => {
       setIsOpen(!isOpen); 
-      console.log(isOpen)
     };
 
   return (
@@ -32,6 +31,9 @@ function Nav() {
   
             <li>
               <Link className="text-gray-500 transition hover:text-gray-500/75" href="/ScoutMembers"> Scout Members </Link>
+            </li>
+            <li>
+              <Link className="text-gray-500 transition hover:text-gray-500/75" href="/Goals"> Goals of year </Link>
             </li>
           </ul>
         </nav>
@@ -71,14 +73,14 @@ function Nav() {
           </button>
           {isOpen && (
 
-            <nav aria-label="Global" className=" md:block absolute top-0 bottom-0 z-10 right-0 p-4 bg-[#a9a9a9]">
+            <nav  aria-label="Global" className=" md:block fixed top-0 bottom-0 z-10 right-0 p-4 bg-teal-600">
           <ul className="flex flex-col items-center gap-[2.5rem] font-bold  mt-4 text-lg">
             <li>
-              <Link className="text-gray-500 transition hover:text-black  " href="/AddMember"> Add member </Link>
+              <Link className="text-white transition hover:text-black  " href="/AddMember"> Add member </Link>
             </li>
   
             <li>
-              <Link className="text-gray-500 transition hover:text-black" href="/ScoutMembers"> Scout Members </Link>
+              <Link className="text-white transition hover:text-black" href="/ScoutMembers"> Scout Members </Link>
             </li>
           </ul>
           <CircleX size={30} color="black" className='absolute top-1 left-1 '  strokeWidth={3} onClick={toggleMenu} />

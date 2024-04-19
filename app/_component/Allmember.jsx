@@ -19,7 +19,7 @@ useEffect(()=>{
   getAllmembers()
 },[])
   return (
-<div className="overflow-x-auto relative h-[90vh] ">
+<div className="overflow-x-auto    ">
   <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
     <thead className="ltr:text-left rtl:text-right">
       <tr>
@@ -50,7 +50,7 @@ useEffect(()=>{
     }
     </tbody>
   </table>
-  <div className='absolute cursor-pointer bottom-0 left-0 '><Save size={48} color="#000000"  strokeWidth={1.5} /></div>
+  <div className=' cursor-pointer bottom-0 left-0 fixed'><Save size={48} color="#000000"  strokeWidth={1.5} /></div>
 </div>
   )
 }
