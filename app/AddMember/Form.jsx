@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useState } from 'react';   
+import React, { useState } from 'react';   
 import FunApi from '../_axios/FunApi';
 
 
@@ -15,7 +15,7 @@ function Form() {
   const change = (e) => {
     setgroup({ ...group, [e.target.id]: e.target.value });
   };
-  const addmember=(e)=>{
+  const addmember=async (e)=>{
     e.preventDefault();
     const data={
       data:{
@@ -26,12 +26,14 @@ function Form() {
         Data:group.Data
       } 
     };
-    FunApi.postUserData(data).then(res=>
-      console.log(res.data),
-      alert("save sccuss")
+    await FunApi.postUserData(data).then(res=>
+      alert("save sccuss"),
+    ).finally(res=>
+    window.location.reload()
     )
     .catch(rej=>console.log(rej))
   }
+
 
 
 
