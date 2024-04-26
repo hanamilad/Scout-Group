@@ -3,25 +3,60 @@
 import React, { useEffect, useState } from 'react'
 import FunApi from '../_axios/FunApi'
 import { Save } from 'lucide-react';
+import { useUser } from '@clerk/nextjs';
 
 
 
 function Allmember() {
+  const {user}=useUser()
   const [members,setmembers]=useState()
+  const [attendancedate,setattendancedate]=useState([])
+  const [selectedMembersIds, setSelectedMembersIds] = useState([]);
+
+
+
 
 const getAllmembers=()=>{
   FunApi.getallmember().then(
-    res=>setmembers(res.data.data) 
+    res=>setmembers(res.data.data)  
   )
 }
+const getattendancedate= async()=>{
+  FunApi.getAttendance().then(
+    res=> setattendancedate(res.data.data) 
+  )
+}
+
 useEffect(()=>{
-  getAllmembers()
+  getAllmembers();
+  getattendancedate()
+
 },[])
 
-const recordAttendance=(memberId, statu)=>{
-  console.log(memberId,statu)
-
+const checkboxvalue= (id,member)=>{
+  const today =  new Date().toISOString().split("T")[0];
+  for (const item of member.attributes.attendances.data) {
+      if (item.attributes.date === today) {
+        return true 
+      }else{
+        undefined
+      }
+    
+  }
 }
+
+
+const recordAttendance = async (membersIds, status) => {
+const data = {
+    data: {
+      members: membersIds,
+      date: new Date().toISOString().split('T')[0],
+      status: status,
+    }
+  };
+ await FunApi.postAttendance(data)
+.then(res=>console.log(res))
+};
 
 
   return (
@@ -39,12 +74,21 @@ const recordAttendance=(memberId, statu)=>{
     </thead>
     <tbody className="divide-y divide-gray-200">
     {members?.map((member,index)=>{
-      return(
+
+      return( 
 <>
         <tr className='text-center' key={member.id}>
         <td className="sticky inset-y-0 start-0 bg-white px-4 py-2">  
         <span>{index}_</span>
-          <input className="size-5 rounded border-gray-300" type="checkbox" id="Row1" checked={()=>recordAttendance(member.id,true)}           
+          <input className="size-5 rounded border-gray-300" type="checkbox" 
+checked={checkboxvalue(member.id,member)}
+onChange={(e) => {
+    if (e.target.checked) {
+      setSelectedMembersIds(prev => [...prev, member.id]);
+    } else {
+      setSelectedMembersIds(prev => prev.filter(id => id !== member.id));
+    }
+  }}                                          
            />
         </td>
         <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{member.attributes.Name}</td>
@@ -56,7 +100,7 @@ const recordAttendance=(memberId, statu)=>{
     }
     </tbody>
   </table>
-  <div className=' cursor-pointer bottom-0 left-0 fixed'><Save size={48} color="#000000"  strokeWidth={1.5} /></div>
+  <div className=' cursor-pointer bottom-0 left-0 fixed' onClick={ ()=>{user ? recordAttendance(selectedMembersIds, true) : alert("انتا ليس لديك الصالحيه لهذه الخاصيه  ") }}><Save size={48} color="#000000"  strokeWidth={1.5} /></div>
 </div>
   )
 }

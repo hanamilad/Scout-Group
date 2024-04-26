@@ -3,8 +3,11 @@
 import React, { useEffect, useState } from 'react'
 import FunApi from '../_axios/FunApi'
 import { CirclePlus, CircleX, Pencil, Save, Trash2 } from 'lucide-react'
+import Breadcrumb from '../_component/Breadcrumb '
+import { useUser } from '@clerk/nextjs'
 
 function Goals() {
+  const {user}=useUser()
 const [Goals,setGoals]=useState([])
 const [editgoals, seteditgoals] = useState(null);
 const [isopen,setisopen]=useState(false)  
@@ -74,6 +77,9 @@ useEffect(()=>{
 
 
   return (
+    <>
+      <Breadcrumb padeName="Goals" />
+  
 <fieldset>
   <div className="space-y-2">
  {Goals?.map((goal,index)=>{
@@ -147,7 +153,9 @@ Namesubject: e.target.value
     <CirclePlus size={48} color="#006614" strokeWidth={2.75} onClick={Toggle} />
     {
       isopen? 
-    <form action="#" onSubmit={addgoal} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 fixed bottom-[30px] left-[40px]" >
+      
+
+    <form action="#" onSubmit={()=>{user? addgoal : alert("انتا ليس لديك الصالحيه لهذه الخاصيه  ") }} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 fixed bottom-[30px] left-[40px]" >
       <div>
         <label htmlFor="email" className="sr-only">Email</label>
 
@@ -186,6 +194,7 @@ Namesubject: e.target.value
 
   </div>
 </fieldset>
+  </>
   )
 }
 

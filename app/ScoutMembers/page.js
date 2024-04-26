@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react'
 import Breadcrumb from '../_component/Breadcrumb '
 import FunApi from '../_axios/FunApi'
 import {CircleX, Pencil,Save,Trash2} from 'lucide-react'
+import { useUser } from '@clerk/nextjs'
 
 
 function ScoutMembers() {
+  const {user}=useUser()
   const [members,setmembers]=useState()
   const [editingUser, setEditingUser] = useState(null);
 
@@ -65,7 +67,6 @@ useEffect(()=>{
         <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Date of Birth</th>
         <th className="w-[150px]  px-4 py-2 font-medium text-gray-900">Address</th>
         <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">group</th>
-        <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Attendance rate</th>
       </tr>
     </thead>
 
@@ -137,6 +138,7 @@ onChange={(e) => setEditingUser({ ...editingUser, attributes: {
 
 </td>
 </tr>
+
 <div className='absolute cursor-pointer bottom-0 left-0 ' onClick={() => handleSave(editingUser)}><Save size={48} color="#000000"  strokeWidth={1.5} /></div>
 <div className='absolute cursor-pointer bottom-0 left-14 ' onClick={handleCancel}><CircleX size={48} color="#FA0000"  strokeWidth={3} /></div>
 </>
@@ -150,11 +152,10 @@ onChange={(e) => setEditingUser({ ...editingUser, attributes: {
         <td className="whitespace-nowrap px-4 py-2 text-gray-700">{member?.attributes?.Data}</td>
         <td className="whitespace-normal px-4 py-2  text-gray-700">{member?.attributes?.description}</td>
         <td className="whitespace-nowrap px-4 py-2 text-gray-700">{member?.attributes?.group}</td>
-        <td className="whitespace-nowrap px-4 py-2 text-gray-700"></td>
         <td className="whitespace-nowrap px-4 py-2 text-gray-700 flex" >
         <div></div>
-        <div onClick={()=>updatemember(member.id,member)}> <Pencil size={16} color="#000000" strokeWidth={1.5} className='mr-2 cursor-pointer' /></div>
-        <div onClick={()=>deletemember(member.id)}> <Trash2 size={16} color="#ff0000" strokeWidth={1.5} className='cursor-pointer' /></div>
+        <div onClick={()=>{user? updatemember(member.id,member) : alert("انتا ليس لديك الصالحيه لهذه الخاصيه  ")}}> <Pencil size={16} color="#000000" strokeWidth={1.5} className='mr-2 cursor-pointer' /></div>
+        <div onClick={()=>{user? deletemember(member.id) : alert("انتا ليس لديك الصالحيه لهذه الخاصيه  ") }}> <Trash2 size={16} color="#ff0000" strokeWidth={1.5} className='cursor-pointer' /></div>
        </td>
       </tr>
           </>
