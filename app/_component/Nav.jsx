@@ -4,7 +4,7 @@ import Image from 'next/image'
 import photo from '../../public/photo.png'
 import Link from 'next/link'
 import {CircleX} from 'lucide-react'
-import { useUser } from '@clerk/nextjs'
+import { useUser,UserButton } from '@clerk/nextjs'
 
 function Nav() {
   const {user}=useUser();
@@ -14,7 +14,8 @@ function Nav() {
     const toggleMenu = () => {
       setIsOpen(!isOpen);  
     };
-
+    const close=()=>{ body=document.body.click=setIsOpen(false)}
+    close()
 
   return (
     <header className="bg-white">
@@ -48,9 +49,7 @@ function Nav() {
           <div className="sm:flex sm:gap-4">
           {
             user? 
-            <div>
-              <span className='bg-teal-600 text-white p-2'>{user.username }</span>
-            </div>
+           <div> <UserButton afterSignOutUrl='/'/></div>
             :
             <Link
               className="block rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700"

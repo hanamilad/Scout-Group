@@ -1,12 +1,12 @@
 "use client"
 
-import React, { useState } from 'react';   
+import React, { useEffect, useState } from 'react';   
 import FunApi from '../_axios/FunApi';
 import { useUser } from '@clerk/nextjs';
 
 
 function Form() {
-const {user}=useUser()
+const user = useUser()
 
   const [group,setgroup]=useState({
     Name:"",
@@ -29,12 +29,17 @@ const {user}=useUser()
         Data:group.Data
       } 
     };
-    await FunApi.postUserData(data).then(res=>
-      alert("save sccuss"),
-    ).finally(res=>
-    window.location.reload()
+    if(user){
+      await FunApi.postUserData(data).then(res=>
+        alert("save sccuss"),
+      ).finally(res=>
+      window.location.reload()
+      )
+      .catch(rej=>console.log(rej))
+    }else(
+      alert("mo")
     )
-    .catch(rej=>console.log(rej))
+
   }
 
 
@@ -54,8 +59,7 @@ const {user}=useUser()
   <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
     <div className="grid grid-cols-1 gap-x-16 gap-y-8 ">
       <div className="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
-   
-          <form action="#"  className="space-y-4" onSubmit={()=>{user? addmember : alert("انتا ليس لديك الصالحيه لهذه الخاصيه  ") }}   >
+          <form action="#"  className="space-y-4" onSubmit={addmember}   >
             <div>
               <label className="sr-only" htmlFor="name">Name</label>
               <input
