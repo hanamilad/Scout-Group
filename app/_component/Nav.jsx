@@ -14,8 +14,7 @@ function Nav() {
     const toggleMenu = () => {
       setIsOpen(!isOpen);  
     };
-    const close=()=>{ body=document.body.click=setIsOpen(false)}
-    close()
+
 
   return (
     <header className="bg-white">
