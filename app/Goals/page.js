@@ -39,10 +39,16 @@ const getallgoals= ()=>{
     setGoals(res.data.data)
   )
 } 
-const deletgoals = (id) => {
-  FunApi.deletgoals(id).then(res => {
-    getallgoals();
-  }).catch(rej => console.log(rej));
+const deletgoals = async (id) => {
+  if(user){
+    await FunApi.deletgoals(id).then(res => {
+      getallgoals();
+    }).catch(rej => console.log(rej));
+  }else{
+    alert("انتا ليس لديك الصالحيه لهذه الخاصيه  ")
+
+  }
+
 }
 const handleCancel = () => {
   seteditgoals(null);
@@ -66,8 +72,13 @@ const handleSave = async () => {
   }
 };
 
-const updategoals=(id,user)=>{
-  seteditgoals(user); 
+const updategoals=(id,users)=>{
+if(user){
+  seteditgoals(users);
+}else{
+  alert("انتا ليس لديك الصالحيه لهذه الخاصيه  ")
+
+}
 }
 const Toggle=()=>{
   setisopen(!isopen)
@@ -83,7 +94,53 @@ useEffect(()=>{
 
   return (
     <>
+    <div className='flex justify-between'>
       <Breadcrumb padeName="Goals" />
+
+
+      <div className=' cursor-pointer'>
+    <CirclePlus size={48} color="#006614" strokeWidth={2.75} onClick={Toggle} />
+    {
+      isopen? 
+      
+
+    <form action="#" onSubmit={addgoal} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 fixed bottom-[30px] left-[40px]" >
+      <div>
+        <label htmlFor="email" className="sr-only">Email</label>
+
+        <div className="">  
+          <input
+            type="text"
+            name='Namesubject'
+            id='Namesubject'
+            onChange={change}
+            className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm text-center border"
+            placeholder="الموضوع"
+          />
+
+      </div>
+      </div>
+      <button
+        type="submit"
+        className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
+      >
+        Add 
+      </button>
+    </form>
+ : <></>
+    }
+
+
+
+
+
+
+
+
+
+    
+    </div>
+    </div>
   
 <fieldset>
   <div className="space-y-2">
@@ -95,9 +152,9 @@ useEffect(()=>{
       htmlFor=""
       className="flex cursor-pointer items-start gap-4 rounded-lg border  justify-between border-gray-200 p-4 transition hover:bg-gray-50 has-[:checked]:bg-blue-50"
     >
-           <div className='flex'>
-           <div className='absolute cursor-pointer bottom-0 right-0 ' onClick={() => handleSave(editgoals)}><Save size={48} color="#000000"  strokeWidth={1.5} /></div>
-<div className='absolute cursor-pointer bottom-0 right-14 ' onClick={handleCancel}><CircleX size={48} color="#FA0000"  strokeWidth={3} /></div>
+           <div className='fixed bottom-0 right-0'>
+           <div className=' cursor-pointer inline-flex ' onClick={() => handleSave(editgoals)}><Save size={48} color="#000000"  strokeWidth={1.5} /></div>
+<div className=' cursor-pointer inline-flex ' onClick={handleCancel}><CircleX size={48} color="#FA0000"  strokeWidth={3} /></div>
            </div>
 
       <div>
@@ -154,48 +211,7 @@ Namesubject: e.target.value
   )
     
   }) }
-  <div className='fixed bottom-3 left-3 cursor-pointer'>
-    <CirclePlus size={48} color="#006614" strokeWidth={2.75} onClick={Toggle} />
-    {
-      isopen? 
-      
-
-    <form action="#" onSubmit={addgoal} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 fixed bottom-[30px] left-[40px]" >
-      <div>
-        <label htmlFor="email" className="sr-only">Email</label>
-
-        <div className="">  
-          <input
-            type="text"
-            name='Namesubject'
-            id='Namesubject'
-            onChange={change}
-            className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm text-center border"
-            placeholder="الموضوع"
-          />
-
-      </div>
-      </div>
-      <button
-        type="submit"
-        className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
-      >
-        Add 
-      </button>
-    </form>
- : <></>
-    }
-
-
-
-
-
-
-
-
-
-    
-    </div>
+  
 
   </div>
 </fieldset>
