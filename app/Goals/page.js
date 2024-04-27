@@ -24,10 +24,15 @@ const addgoal=async (e)=>{
       Namesubject:newgoals.Namesubject,
     } 
   };
-  await FunApi.addgoals(data).then(res=>
-  window.location.reload()
-  )
-  .catch(rej=>console.log(rej))
+  if(user){
+
+    await FunApi.addgoals(data).then(res=>
+    window.location.reload()
+    )
+    .catch(rej=>console.log(rej))
+  }else{
+    alert("انتا ليس لديك الصالحيه لهذه الخاصيه  ")
+  }
 }
 const getallgoals= ()=>{
   FunApi.getGoals().then(res=>
@@ -155,7 +160,7 @@ Namesubject: e.target.value
       isopen? 
       
 
-    <form action="#" onSubmit={()=>{user? addgoal : alert("انتا ليس لديك الصالحيه لهذه الخاصيه  ") }} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 fixed bottom-[30px] left-[40px]" >
+    <form action="#" onSubmit={addgoal} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 fixed bottom-[30px] left-[40px]" >
       <div>
         <label htmlFor="email" className="sr-only">Email</label>
 
