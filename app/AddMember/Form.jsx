@@ -18,29 +18,31 @@ const user = useUser()
   const change = (e) => {
     setgroup({ ...group, [e.target.id]: e.target.value });
   };
-  const addmember=async (e)=>{
+  const addmember = async (e) => {
     e.preventDefault();
-    const data={
-      data:{
-        Name:group.Name,
-        number:group.number,
-        group:group.group,
-        description:group.description,
-        Data:group.Data
-      } 
+    if (!user.signedIn) {
+      alert('انتا ليس لديك الصلاحيه لاضافه عضو');
+      return;
+    }
+    
+    const data = {
+      data: {
+        Name: group.Name,
+        number: group.number,
+        group: group.group,
+        description: group.description,
+        Data: group.Data
+      }
     };
-    if(user){
-      await FunApi.postUserData(data).then(res=>
-        alert("save sccuss"),
-      ).finally(res=>
-      window.location.reload()
-      )
-      .catch(rej=>console.log(rej))
-    }else(
-      alert("mo")
-    )
-
-  }
+  
+    try {
+      await FunApi.postUserData(data);
+      alert('Save successful');
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 
 
@@ -120,7 +122,7 @@ const user = useUser()
 
             <div className="mt-4">
               <button  
-                className="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
+                className="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"  
               >
                 Send 
               </button>
