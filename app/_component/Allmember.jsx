@@ -83,11 +83,16 @@ const data = {
           <input className="size-5 rounded border-gray-300" type="checkbox" 
 checked={checkboxvalue(member.id,member)}
 onChange={(e) => {
+  if(user){
     if (e.target.checked) {
       setSelectedMembersIds(prev => [...prev, member.id]);
     } else {
       setSelectedMembersIds(prev => prev.filter(id => id !== member.id));
     }
+  }else{
+    alert("لا يمكنك اخذ الغياب وانتا ليس لديك الصلاحيه ")
+  }
+   
   }}                                          
            />
         </td>
