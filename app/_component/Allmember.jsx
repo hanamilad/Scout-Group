@@ -41,7 +41,6 @@ const checkboxvalue= (id,member)=>{
       }else{
         undefined
       }
-    
   }
 }
 
@@ -59,6 +58,8 @@ const data = {
 };
 
 
+
+
   return (
 <div className="overflow-x-auto    ">
   <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
@@ -68,13 +69,12 @@ const data = {
           <label htmlFor="SelectAll" className="sr-only">Select All</label>
           { new Date().toISOString().split('T')[0]}
         </th>
-        <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900" >name</th>
         <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">group</th>
+        <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900" >name</th>
       </tr>
     </thead>
     <tbody className="divide-y divide-gray-200">
     {members?.map((member,index)=>{
-
       return( 
 <>
         <tr className='text-center' key={member.id}>
@@ -91,8 +91,8 @@ onChange={(e) => {
   }}                                          
            />
         </td>
-        <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{member.attributes.Name}</td>
         <td className="whitespace-nowrap px-4 py-2 text-gray-700">{member.attributes.group}</td>    
+        <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{member.attributes.Name}</td>
       </tr>
 </>
       )
